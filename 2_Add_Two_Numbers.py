@@ -6,21 +6,15 @@
 
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        carry = 0
-        sum_list = ListNode(0)
-        traverse = sum_list
-        slow = None
-        while(l1 or l2):
-            if l1: # l1 not exhausted
-                traverse.val += l1.val
-                l1 = l1.next
-            if l2: # l2 not exhausted
-                traverse.val += l2.val
-                l2 = l2.next
-            traverse.next = ListNode(traverse.val // 10)
-            traverse.val = traverse.val % 10            
-            slow = traverse
-            traverse = traverse.next
-        if traverse.val == 0:
-            slow.next = None
-        return sum_list
+        carry, solution, traverser = 0, None, None
+        while l1 or l2 or carry:
+            digit_sum = carry + (l1.val if l1 else 0) + (l2.val if l2 else 0)
+            if not solution:
+                traverser = solution = ListNode(digit_sum % 10)
+            else:
+                traverser.next = ListNode(digit_sum % 10)
+                traverser = traverser.next
+            carry = digit_sum // 10
+            if l1: l1 = l1.next
+            if l2: l2 = l2.next
+        return solution
