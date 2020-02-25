@@ -1,10 +1,9 @@
 class Solution:
     def subtractProductAndSum(self, n: int) -> int:
-        prod_val = 1
-        sum_val = 0
-        while n > 0:
-            digit = n % 10
-            n = n // 10
-            prod_val *= digit
-            sum_val += digit
+        sum_val, prod_val = 0, 1
+        while n:
+            unit_digit = n % 10
+            n //= 10
+            sum_val += unit_digit
+            prod_val *= unit_digit
         return prod_val - sum_val
